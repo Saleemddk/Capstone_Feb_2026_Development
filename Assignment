@@ -1,1 +1,9 @@
+Day 1:
+=======
 1. Create a utility method inside the utilities.py file to read the data from any database
+
+Day 2:
+=======
+1. Implement the exception handling for all the data extrcation methods ( refer for Sales data )
+2. Implement the utilities method for read the data from any database in Transformation script
+3. Implement exception handling for all the data trasaformation method

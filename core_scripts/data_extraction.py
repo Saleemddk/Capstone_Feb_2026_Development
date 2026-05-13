@@ -5,26 +5,30 @@ import logging
 
 # Logging configuration
 from common_utilities.utilities import read_file_and_write_to_database
+from project_config.etlconfig import *
 
 logging.basicConfig(
     filename="application_logs/etljob.log",
-    filemode='a',
+    filemode='w',
     format='%(asctime)s-%(levelname)s-%(message)s',
     level=logging.INFO )
 logger = logging.getLogger(__name__)
 
 
 # database connection
-oracle_engine = create_engine("oracle+cx_oracle://system:admin@localhost:1521/xe")
-mysql_engine = create_engine("mysql+pymysql://root:Admin%40143@localhost:3308/Feb2026Retaildwh")
+oracle_engine = create_engine(f"oracle+cx_oracle://{ORACLE_USER}:{ORACLE_PASSWORD}@{ORACLE_HOST}:{ORACLE_PORT}/{ORACLE_SERVICE}")
+mysql_engine = create_engine(f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}")
 
 class DataExtrcation:
 
     def extract_sales_data_load_stage(self,file_path,file_type):
         logger.info("Data extrcation for sales data has started...")
-        df = read_file_and_write_to_database(file_path,file_type)
-        df.to_sql("stag_sales",mysql_engine,index=False)
-        logger.info("Data extrcation for sales data has completed...")
+        try:
+            df = read_file_and_write_to_database(file_path,file_type)
+            df.to_sql("stag_sales",mysql_engine,index=False)
+            logger.info("Data extrcation for sales data has completed...")
+        except Exception as e:
+            logger.error(f"Error encountered while data extrcation of sales data,{e},exc_info=True")
 
     def extract_product_data_load_stage(self,file_path,file_type):
         logger.info("Data extrcation for product data has started...")
