@@ -6,4 +6,8 @@ Day 2:
 =======
 1. Implement the exception handling for all the data extrcation methods ( refer for Sales data )
 2. Implement the utilities method for read the data from any database in Transformation script
-3. Implement exception handling for all the data trasaformation method
+3. Implement exception handling for all the data trasformation method
+
+Day 3:
+======
+1. Implement exception handling across all the methods within Extraction, Transformation and loading modules
